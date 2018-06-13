@@ -34,7 +34,9 @@ public class ConsoleGame {
           System.out.printf("Dealer's top card: %s.%n", dealer.getHand()[1]);
           System.out.println("Your play:");
           player.play();
-          dealer.play();
+          if (!player.isBusted()) {
+            dealer.play();
+          }
           System.out.printf("Dealer's hand: %s.%n", dealer);
           int comparison = player.compareTo(dealer);
           if (comparison < 0) {
@@ -44,7 +46,12 @@ public class ConsoleGame {
             System.out.printf("You won $%d!%n", bet);
             pot += bet;
           } else {
-            System.out.printf("Push!%n");
+            if (dealer.isBlackjack()) {
+              System.out.printf("Dealer got Blackjack. You lost $%d!%n", bet);
+              pot -= bet;
+            } else {
+              System.out.printf("Push!%n");
+            }
           }
           bet = -1;
         }
